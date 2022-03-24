@@ -1,7 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { auth, provider } from "../firebase_config";
 
-const Headers = () => {
+const Headers = (props) => {
+  const handleAuth = () => {
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <Nav>
       <Logo src="/images/logo.svg" />
@@ -31,25 +43,25 @@ const Headers = () => {
           <span>SERIES</span>
         </a>
       </NavMenu>
-      <UserImg src='https://lh3.googleusercontent.com/ogw/ADea4I659tQorDiRhAmUtwE1Cmf5hLO6DampCqXvTOXNGw=s32-c-mo'/>
+      <Login onClick={handleAuth}>Login</Login>
+      {/* <UserImg src='https://lh3.googleusercontent.com/ogw/ADea4I659tQorDiRhAmUtwE1Cmf5hLO6DampCqXvTOXNGw=s32-c-mo'/> */}
     </Nav>
-  )
-}
+  );
+};
 
 export default Headers;
 
 const Nav = styled.nav`
-  height:70px;
+  height: 70px;
   background: #090b13;
-  display:flex;
-  align-items:center ;
-  padding:0 36px ;
+  display: flex;
+  align-items: center;
+  padding: 0 36px;
   overflow-x: hidden;
 `;
 
 const Logo = styled.img`
-  width:80px;
-
+  width: 80px;
 `;
 
 const NavMenu = styled.div`
@@ -61,27 +73,26 @@ const NavMenu = styled.div`
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding:0 12px ;
+    padding: 0 12px;
     text-decoration: none;
 
-    img{
+    img {
       height: 20px;
     }
-    span{
+    span {
       font-size: 13px;
       color: white;
       letter-spacing: 1.42px;
       position: relative;
 
-
-      &:after{
-        content:"" ;
+      &:after {
+        content: "";
         height: 2px;
         background: white;
         position: absolute;
-        left:0 ;
-        right:0 ;
-        bottom:-6px ;
+        left: 0;
+        right: 0;
+        bottom: -6px;
         /*opacity: 0;*/
         transform-origin: left center;
         transform: scaleX(0);
@@ -89,20 +100,33 @@ const NavMenu = styled.div`
       }
     }
 
-    &:hover{
-      span:after{
-        transform:scaleX(1) ;
+    &:hover {
+      span:after {
+        transform: scaleX(1);
         opacity: 1;
       }
     }
   }
-
 `;
 
 const UserImg = styled.img`
-  width:48px ;
+  width: 48px;
   height: 48px;
   border-radius: 50%;
   cursor: pointer;
+`;
 
+const Login = styled.a`
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 1px solid #f9f9f9;
+  border-radius: 4px;
+  transition: all 0.2s ease 0s;
+  &:hover {
+    background-color: #f9f9f9;
+    color: #000;
+    border-color: transparent;
+  }
 `;
